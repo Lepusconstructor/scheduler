@@ -67,6 +67,7 @@ storiesOf("Button", module)
     .add("Tuesday", () => (
       <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
     ));
+
     const interviewer = {
       id: 1,
       name: "Sylvia Palmer",
@@ -97,7 +98,7 @@ storiesOf("Button", module)
           id={interviewer.id}
           name={interviewer.name}
           avatar={interviewer.avatar}
-          setInterviewer={action("setInterviewer")}
+          setInterviewer={(event) => action("setInterviewer")(interviewer.id)}
         />
       ));
 
