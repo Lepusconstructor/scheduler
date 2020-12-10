@@ -14,6 +14,25 @@ export function getAppointmentsForDay(state, day) {
   for(let id of dailyAppointmentsId) {
     result.push(state.appointments[id]);
   }
-  console.log(result);
+  
+  return result;
+}
+
+export function getInterview(state, interview) {
+  let result = {};
+  const interviewerId = [];
+  if (!interview) {
+    result = null;
+  } else {
+    for (let interviewer in state.interviewers) {
+      interviewerId.push(interviewer);
+  }
+  for (let id of interviewerId) {
+    if (Number(id) === interview.interviewer) {
+      result.student = interview.student;
+      result.interviewer = state.interviewers[interview.interviewer];
+    }
+  }
+  }
   return result;
 }
