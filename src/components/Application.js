@@ -11,19 +11,61 @@ const GET_INTERVIEWERS = "http://localhost:8001/api/interviewers";
 
 export default function Application() {
   const [state, setState] = useState({
+    
+      day: "",
+      days: [],
+      appointments: {
+        "1": {
+          id: 1,
+          time: "12pm",
+          interview: null
+        }
+      },
+      interviewers: {}
+    
+    /*
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
-    
+    */
   });
+  const bookInterview = (id, interview, done) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+    //API req to update appointments
+    axios.put(`/api/appointments/${id}`, {interview})
+    .then( (res) => {
+      if (res === 204) {
+        setState(prev => ({...prev, appointments}))
+        done && done()
+
+      }
+    })
+    .catch( (err) => {
+      console.log(err.response.status);
+
+    })
+  }
+
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day)
   const setDay = day => setState(prev => ({ ...prev, day }));
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
     return(
-      <Appointment key={appointment.id} {...appointment} interview={interview} interviewers={interviewers}/>
+      <Appointment key={appointment.id} {...appointment} interview={interview} interviewers={interviewers} bookInterview={bookInterview}/>
       )
     })
 
