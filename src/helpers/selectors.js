@@ -41,12 +41,3 @@ export function getInterviewersForDay(state, day) {
   return interviewers;
 }
 
-// update spots by a number
-export function updateSpots(days, id, num) {
-  for (let day of days){
-    if (day.appointments.includes(id)) {
-      day.spots = Number(day.spots) + num;
-    }
-  }
-  return days; 
-};

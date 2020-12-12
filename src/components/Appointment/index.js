@@ -48,7 +48,7 @@ export default function Appointment(props) {
     transition(DELETING, true);
     
     props
-    .bookInterview(props.id)
+    .deleteInterview(props.id)
     .then(() => transition(EMPTY))
     .catch(error => transition(ERROR_DELETE, true));
   }

@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { updateSpots } from 'helpers/selectors';
+
+
 
 export default function useApplicationData (initial) {
+  
   const [ state, setState ] = useState({
     day: "Monday",
     days: [],
@@ -12,6 +14,16 @@ export default function useApplicationData (initial) {
 
   // setDay called by DayList updates state(Day)
   const setDay = day => setState(prev => ({...prev, day }));
+
+  // update spots by a number
+  function updateSpots(days, id, num) {
+    for (let day of days){
+      if (day.appointments.includes(id)) {
+        day.spots += num;
+      }
+    }
+    return days; 
+  };
 
   //get API
   useEffect(() => {
