@@ -47,6 +47,7 @@ export default function Application() {
             days={state.days}
             day={state.day}
             setDay={setDay}
+            appointments={state.appointments}
           />
 
         </nav>
