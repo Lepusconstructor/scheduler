@@ -40,3 +40,13 @@ export function getInterviewersForDay(state, day) {
   const interviewers = dayFound.interviewers.map(interviewerId => state.interviewers[interviewerId]);
   return interviewers;
 }
+
+// update spots by a number
+export function updateSpots(days, id, num) {
+  for (let day of days){
+    if (day.appointments.includes(id)) {
+      day.spots = Number(day.spots) + num;
+    }
+  }
+  return days; 
+};
