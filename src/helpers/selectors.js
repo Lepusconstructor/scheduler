@@ -44,3 +44,13 @@ export function getInterviewersForDay(state, day) {
   );
   return interviewers;
 }
+
+export function getSpotsForDay(state, dayName) {
+  return state.days.find((day) => day.name === dayName).appointments.reduce((accu, appointmentId) => {
+    //appointmentId is the key to access the props.appointments obj
+    return (accu += state.appointments[appointmentId].interview
+      ? 0
+      : 1);
+  }, 0)
+
+}

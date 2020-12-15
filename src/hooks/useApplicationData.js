@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getSpotsForDay } from "helpers/selectors";
 
 export default function useApplicationData(initial) {
   const [state, setState] = useState({
@@ -47,15 +48,43 @@ export default function useApplicationData(initial) {
     // updates appointment data to add new interview
     const appointment = {
       ...state.appointments[id],
+      // if id is 5, ...state.appointments[id] would be 
+      // "5": {
+      //   "id": 5,
+      //   "time": "4pm",
+      //   "interview": {
+      //     "student": "Jim",
+      //     "interviewer": 10
+      //   }
       interview: { ...interview },
     };
-    console.log(appointment)
-
+    console.log(appointment);
+    //a copy of appointments with updated appointment(see above)
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    console.log(appointments)
+    console.log(appointments);
+
+    //we give the newStateTemp the appointments which has the newest appointment
+    const newStateTemp = {
+      ...state,
+      appointments
+    }
+    
+    //
+    const days = state.days.map(day => {
+      if (day.appointments.includes(id)) {
+        return {
+          ...day,
+          spots : getSpotsForDay(newStateTemp, day.name)
+        }
+      } else {
+        return day;
+      }
+    })
+
+
     // spots -1
 
     // const days = updateSpots([ ...state.days], id, -1)
@@ -63,7 +92,7 @@ export default function useApplicationData(initial) {
     // API req to update appointments
     return axios
       .put(`/api/appointments/${id}`, appointment)
-      .then((res) => setState((prev) => ({ ...prev, appointments })));
+      .then((res) => setState((prev) => ({ ...prev, appointments, days })));
   }
 
   function deleteInterview(id) {
@@ -77,13 +106,30 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment,
     };
+     //we give the newStateTemp the appointments which has the newest appointment
+     const newStateTemp = {
+      ...state,
+      appointments
+    }
+    
+    //
+    const days = state.days.map(day => {
+      if (day.appointments.includes(id)) {
+        return {
+          ...day,
+          spots : getSpotsForDay(newStateTemp, day.name)
+        }
+      } else {
+        return day;
+      }
+    })
 
     // spots +1
     //const days = updateSpots([ ...state.days], id, 1)
 
     return axios
       .delete(`/api/appointments/${id}`)
-      .then(() => setState((prev) => ({ ...prev, appointments })));
+      .then(() => setState((prev) => ({ ...prev, appointments, days })));
   }
 
   return { state, setDay, bookInterview, deleteInterview };
