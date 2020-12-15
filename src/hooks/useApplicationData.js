@@ -27,8 +27,8 @@ export default function useApplicationData(initial) {
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),
-      axios.get("api/appointments"),
-      axios.get("api/interviewers"),
+      axios.get("/api/appointments"),
+      axios.get("/api/interviewers"),
     ])
       .then((all) => {
         const [days, appointments, interviewers] = all;
