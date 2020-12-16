@@ -158,7 +158,7 @@ describe("Application", () => {
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
-    const { container, debug } = render(<Application />);
+    const { container } = render(<Application />);
     //making the deletion fail
     axios.delete.mockRejectedValueOnce();
 

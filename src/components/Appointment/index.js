@@ -33,7 +33,7 @@ export default function Appointment(props) {
         student: name,
         interviewer,
       };
-      //SAVING mode until SHOW or ERROR tranistion executed by bookInterview function
+
       transition(SAVING);
 
       props

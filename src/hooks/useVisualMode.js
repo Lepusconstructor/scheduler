@@ -9,9 +9,7 @@ export default function useVisualMode(initial) {
     } else {
       setHistory((prev) => [...prev.slice(0, -1), newMode]);
     }
-    /*
-    setHistory(replace? prev => prev : prev => [...prev, newMode]);
-    */
+
     setMode(newMode);
   };
   const back = () => {
