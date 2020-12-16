@@ -21,3 +21,6 @@ npm test
 ```sh
 npm run storybook
 ```
+!["creating new appointment"](https://github.com/Lepusconstructor/scheduler/blob/master/docs/appointment-form-create-new.png?raw=true)
+!["error saving"](https://github.com/Lepusconstructor/scheduler/blob/master/docs/appointment-form-error.png?raw=true)
+!["appointments empty and booked"](https://github.com/Lepusconstructor/scheduler/blob/master/docs/appointment-form.png?raw=true)
