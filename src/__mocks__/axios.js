@@ -79,5 +79,21 @@ export default {
         data: fixtures.interviewers
       });
     }
-  })
+  }),
+  
+  put: jest.fn(() => {
+    
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content"
+      });
+  }),
+
+  delete: jest.fn(() => {
+    console.log("appear");
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+    });
+})
 }
