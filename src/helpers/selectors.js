@@ -12,22 +12,24 @@ export function getAppointmentsForDay(state, day) {
   return appointments;
 }
 
+//looks up interviewer obj by id to get interview result
 export function getInterview(state, interview) {
-  let result = {};
-  const interviewerId = [];
+  
   if (!interview) {
-    result = null;
-  } else {
-    for (let interviewer in state.interviewers) {
-      interviewerId.push(interviewer);
-    }
-    for (let id of interviewerId) {
-      if (Number(id) === interview.interviewer) {
-        result.student = interview.student;
-        result.interviewer = state.interviewers[interview.interviewer];
-      }
+    return null;
+  } 
+  
+  let result = {};
+  const interviewerIds = Object.keys(state.interviewers).map( id => Number(id) );
+  
+  for (let id of interviewerIds) {
+    if (id === interview.interviewer) {
+      result.student = interview.student;
+      result.interviewer = state.interviewers[id];
     }
   }
+  
+ 
   return result;
 }
 
@@ -46,10 +48,10 @@ export function getInterviewersForDay(state, day) {
 }
 
 export function getSpotsForDay(state, dayName) {
-  return state.days
-    .find((day) => day.name === dayName)
-    .appointments.reduce((accu, appointmentId) => {
-      //appointmentId is the key to access the props.appointments obj
-      return (accu += state.appointments[appointmentId].interview ? 0 : 1);
-    }, 0);
+  const day = state.days.find((day) => day.name === dayName);
+
+  const spots = day.appointments.reduce((accu, appointmentId) => {
+    return (accu += state.appointments[appointmentId].interview ? 0 : 1);
+  }, 0);
+  return spots;
 }

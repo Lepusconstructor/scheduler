@@ -10,18 +10,7 @@ export default function useApplicationData(initial) {
     interviewers: {},
   });
 
-  // setDay called by DayList updates state(Day)
   const setDay = (day) => setState((prev) => ({ ...prev, day }));
-
-  // update spots by a number
-  // function updateSpots(days, id, num) {
-  //   for (let day of days){
-  //     if (day.appointments.includes(id)) {
-  //       day.spots += num;
-  //     }
-  //   }
-  //   return days;
-  // };
 
   //get API
   useEffect(() => {
@@ -48,23 +37,14 @@ export default function useApplicationData(initial) {
     // updates appointment data to add new interview
     const appointment = {
       ...state.appointments[id],
-      // if id is 5, ...state.appointments[id] would be
-      // "5": {
-      //   "id": 5,
-      //   "time": "4pm",
-      //   "interview": {
-      //     "student": "Jim",
-      //     "interviewer": 10
-      //   }
       interview: { ...interview },
     };
-    console.log(appointment);
-    //a copy of appointments with updated appointment(see above)
+
+    //a copy of appointments with updated appointment
     const appointments = {
       ...state.appointments,
       [id]: appointment,
     };
-    console.log(appointments);
 
     //we give the newStateTemp the appointments which has the newest appointment
     const newStateTemp = {
@@ -72,7 +52,7 @@ export default function useApplicationData(initial) {
       appointments,
     };
 
-    //
+    //updating remaining spots of appointments available in one day
     const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
         return {
@@ -83,10 +63,6 @@ export default function useApplicationData(initial) {
         return day;
       }
     });
-
-    // spots -1
-
-    // const days = updateSpots([ ...state.days], id, -1)
 
     // API req to update appointments
     return axios
@@ -111,7 +87,6 @@ export default function useApplicationData(initial) {
       appointments,
     };
 
-    //
     const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
         return {
@@ -122,9 +97,6 @@ export default function useApplicationData(initial) {
         return day;
       }
     });
-
-    // spots +1
-    //const days = updateSpots([ ...state.days], id, 1)
 
     return axios
       .delete(`/api/appointments/${id}`)

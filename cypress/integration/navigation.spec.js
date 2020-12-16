@@ -1,12 +1,8 @@
 describe("Navigation", () => {
-  it("should reset database", () => {
+  beforeEach(() => {
     cy.request("GET", "/api/debug/reset");
   });
-
-  it("should visit root", () => {
-    cy.visit("/");
-  });
-
+  
   it("should navigate to Tuesday", () => {
     cy.visit("/");
     cy.contains("[data-testid=day]", "Tuesday")
