@@ -135,6 +135,8 @@ describe("Application", () => {
 
   it("shows the save error when failing to save an appointment", async () => {
     const { container, debug } = render(<Application />);
+    //about to click save button and intentionally reject the put req once
+    axios.put.mockRejectedValueOnce();
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -149,15 +151,12 @@ describe("Application", () => {
 
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
-    //about to click save button and intentionally reject the put req once
-    axios.put.mockRejectedValueOnce();
     fireEvent.click(getByText(appointment, "Save"));
     await waitForElement(() =>
       getByText(appointment, "Appointment could not be saved")
     );
-    
   });
-  
+
   it("shows the delete error when failing to delete an existing appointment", async () => {
     const { container, debug } = render(<Application />);
     //making the deletion fail
@@ -171,20 +170,15 @@ describe("Application", () => {
     ).find((appointment) => queryByText(appointment, "Archie Cohen"));
 
     fireEvent.click(queryByAltText(appointment, "Delete"));
-    
-    await waitForElement(() =>
-    getByText(appointment, "Are you sure you would like to delete?")
-    );
-    
-    fireEvent.click(getByText(appointment, "Confirm"));
-    
-    
-    await waitForElement(() =>
-    getByText(appointment, "Appointment could not be deleted")
-    );
-   
 
+    await waitForElement(() =>
+      getByText(appointment, "Are you sure you would like to delete?")
+    );
+
+    fireEvent.click(getByText(appointment, "Confirm"));
+
+    await waitForElement(() =>
+      getByText(appointment, "Appointment could not be deleted")
+    );
   });
 });
-
-

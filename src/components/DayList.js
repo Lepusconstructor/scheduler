@@ -12,7 +12,7 @@ export default function DayList(props) {
         //     ? 0
         //     : 1);
         // }, 0)
-        
+
         return (
           <DayListItem
             key={day.id}

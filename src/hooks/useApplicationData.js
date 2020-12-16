@@ -48,7 +48,7 @@ export default function useApplicationData(initial) {
     // updates appointment data to add new interview
     const appointment = {
       ...state.appointments[id],
-      // if id is 5, ...state.appointments[id] would be 
+      // if id is 5, ...state.appointments[id] would be
       // "5": {
       //   "id": 5,
       //   "time": "4pm",
@@ -69,21 +69,20 @@ export default function useApplicationData(initial) {
     //we give the newStateTemp the appointments which has the newest appointment
     const newStateTemp = {
       ...state,
-      appointments
-    }
-    
+      appointments,
+    };
+
     //
-    const days = state.days.map(day => {
+    const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
         return {
           ...day,
-          spots : getSpotsForDay(newStateTemp, day.name)
-        }
+          spots: getSpotsForDay(newStateTemp, day.name),
+        };
       } else {
         return day;
       }
-    })
-
+    });
 
     // spots -1
 
@@ -106,23 +105,23 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment,
     };
-     //we give the newStateTemp the appointments which has the newest appointment
-     const newStateTemp = {
+    //we give the newStateTemp the appointments which has the newest appointment
+    const newStateTemp = {
       ...state,
-      appointments
-    }
-    
+      appointments,
+    };
+
     //
-    const days = state.days.map(day => {
+    const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
         return {
           ...day,
-          spots : getSpotsForDay(newStateTemp, day.name)
-        }
+          spots: getSpotsForDay(newStateTemp, day.name),
+        };
       } else {
         return day;
       }
-    })
+    });
 
     // spots +1
     //const days = updateSpots([ ...state.days], id, 1)
